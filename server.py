@@ -29,10 +29,10 @@ async def on_ready():
 async def on_message(message):
   msg = message.content
 
-  if msg[0] == '!'  or message.channel.name == "nobot":
+  if msg[0] == '!' or message.channel.name != "kutai":
     return
   
-  if len(log) >= 5:
+  if len(log) >= 4:
     log.pop(0)
   log.append({"u": user, "m": message.content})
 
@@ -49,9 +49,9 @@ async def on_message(message):
 
   response = openai.Completion.create(model = model["model"], prompt = prompt, stop = model["stop"], temperature = model["temperature"])
 
-  print(response)
+  response = response["choices"][0]["text"]
 
-  response = response["choices"]["text"]
+  log.append({"u": "kutay", "m": response})
 
   await message.channel.send(response)
 client.run(token)
