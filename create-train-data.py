@@ -18,7 +18,7 @@ for chat_num in range(1, chat_n + 1):
     for line in f.readlines():
       j = json.loads(line)
       if last_j["name"] == j["name"]:
-        tot_message += ". " + j["message"]
+        tot_message += " " + j["message"]
       else:
         bol = j["message"]
         last_j["message"] = tot_message
@@ -49,5 +49,5 @@ for chat_num in range(1, chat_n + 1):
 
 with open('./train_data.jsonl', 'w') as f:
   for i in range(len(train_data)):
-    if i % 6 == 0:
+    if i % 20 == 0:
       f.write(json.dumps(train_data[i]) + "\n")

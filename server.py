@@ -17,7 +17,9 @@ info = {}
 
 log = []
 
-models = [{"model": "babbage:ft-personal-2022-09-18-11-37-47", "temperature": 0.80, "logprobs": 1, "stop": "\n", "top_p": 0.80}]
+user = "User"
+
+models = [{"model": "curie:ft-personal-2023-05-28-11-17-28", "temperature": 0.80, "stop": "\n"}]
 
 @client.event
 async def on_ready():
@@ -29,23 +31,12 @@ async def on_message(message):
 
   if msg[0] == '!'  or message.channel.name == "nobot":
     return
-  global stop, info, log
+  
   if len(log) >= 5:
     log.pop(0)
-  log.append({"u":message.author.name, "m":message.content})
+  log.append({"u": user, "m": message.content})
+
   if message.author == client.user:
-    return
-  if "dont stop kutay" in msg:
-    await message.channel.send('tamam devam ediom (durdurmak icin "stop kutay" de)')
-    stop = 0
-  elif "stop kutay" in msg:
-    await message.channel.send('tamam duruom (devam ettirmek icin "dont stop kutay" de)')
-    stop = 1
-
-  if stop == 1:
-    return
-
-  if random.randint(1, 100) > 3:
     return
 
   prompt = ""
@@ -54,16 +45,13 @@ async def on_message(message):
     prompt += log[l]["u"] + ": " + log[l]["m"] + "\n"
   prompt += "kutay:"
 
-  # model = random.choice(models)
   model = models[0]
 
-  response = openai.Completion.create(model=model["model"], prompt=prompt, top_p=model["top_p"], logprobs=model["logprobs"], stop=model["stop"])
-  # print(response)
-  # print(prompt, "\n")
-  response = response["choices"][0]["text"]
+  response = openai.Completion.create(model = model["model"], prompt = prompt, stop = model["stop"], temperature = model["temperature"])
+
+  print(response)
+
+  response = response["choices"]["text"]
 
   await message.channel.send(response)
-  #for s in send:
-      #await message.channel.send(s)
-
 client.run(token)
