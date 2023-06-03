@@ -29,6 +29,8 @@ async def on_ready():
 async def on_message(message):
   if message.author == client.user:
     return
+  
+  msg = message.content
 
   if msg[0] == '!':
     return
@@ -38,8 +40,6 @@ async def on_message(message):
   log.append({"u": user, "m": message.content})
 
   ra = random.randint(0, 20)
-
-  msg = message.content
 
   if ra != 5:
     return
