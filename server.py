@@ -32,14 +32,8 @@ async def on_message(message):
 
   msg = message.content
 
-  if msg[0] == '!':
+  if (msg[0] == '!' or message.channel.name != "kutai") and ra != 5:
     return
-  
-  if msg[0] != '@' and message.channel.name != "kutai" and ra != 5:
-    return
-  
-  if msg[0] == '@':
-    msg = msg[1:len(msg)]
 
   if len(log) >= 2:
     log.pop(0)
