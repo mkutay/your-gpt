@@ -27,20 +27,22 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-  
-  ra = random.randint(0, 20)
-
-  msg = message.content
-
-  if (msg[0] == '!' or message.channel.name != "kutai") and ra != 5:
-    return
-  
   if message.author == client.user:
+    return
+
+  if msg[0] == '!':
     return
 
   if len(log) >= 2:
     log.pop(0)
   log.append({"u": user, "m": message.content})
+
+  ra = random.randint(0, 20)
+
+  msg = message.content
+
+  if ra != 5:
+    return
 
   prompt = ""
 
