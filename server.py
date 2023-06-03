@@ -34,19 +34,21 @@ async def on_message(message):
 
   if (msg[0] == '!' or message.channel.name != "kutai") and ra != 5:
     return
-
-  if len(log) >= 2:
-    log.pop(0)
-  log.append({"u": user, "m": message.content})
-
+  
   if message.author == client.user:
     return
+
+  if len(log) >= 3:
+    log.pop(0)
+  log.append({"u": user, "m": message.content})
 
   prompt = ""
 
   for l in range(len(log)):
     prompt += log[l]["u"] + ": " + log[l]["m"] + "\n"
   prompt += "kutay:"
+
+  print(prompt + "\n")
 
   model = models[0]
 
@@ -57,5 +59,4 @@ async def on_message(message):
   log.append({"u": "kutay", "m": response})
 
   await message.channel.send(response)
-  print(log)
 client.run(token)
