@@ -27,12 +27,21 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+  
+  ra = random.randint(0, 20)
+
   msg = message.content
 
-  if msg[0] == '!' or message.channel.name != "kutai":
+  if msg[0] == '!':
     return
   
-  if len(log) >= 4:
+  if msg[0] != '@' and message.channel.name != "kutai" and ra != 5:
+    return
+  
+  if msg[0] == '@':
+    msg = msg[1:len(msg)]
+
+  if len(log) >= 2:
     log.pop(0)
   log.append({"u": user, "m": message.content})
 
@@ -54,4 +63,5 @@ async def on_message(message):
   log.append({"u": "kutay", "m": response})
 
   await message.channel.send(response)
+  print(log)
 client.run(token)
