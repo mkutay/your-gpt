@@ -38,7 +38,7 @@ async def on_message(message):
   if message.author == client.user:
     return
 
-  if len(log) >= 3:
+  if len(log) >= 2:
     log.pop(0)
   log.append({"u": user, "m": message.content})
 
