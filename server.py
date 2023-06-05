@@ -50,8 +50,6 @@ async def on_message(message):
     prompt += log[l]["u"] + ": " + log[l]["m"] + "\n"
   prompt += "kutay:"
 
-  print(prompt + "\n")
-
   model = models[0]
 
   response = openai.Completion.create(model = model["model"], prompt = prompt, stop = model["stop"], temperature = model["temperature"])
