@@ -35,7 +35,7 @@ async def on_message(message):
   if msg[0] == '!':
     return
 
-  if len(log) >= 2:
+  if len(log) >= 5:
     log.pop(0)
   log.append({"u": user, "m": message.content})
 
